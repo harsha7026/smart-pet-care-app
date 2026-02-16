@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmed - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .receipt {
+            background: #f8f9fa;
+            border: 2px dashed #4caf50;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .receipt-number {
+            font-size: 12px;
+            color: #999;
+            font-family: monospace;
+        }
+        .divider {
+            height: 1px;
+            background: #ddd;
+            margin: 15px 0;
+        }
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .receipt-label {
+            color: #666;
+        }
+        .receipt-value {
+            color: #333;
+            font-weight: 500;
+        }
+        .amount-total {
+            font-size: 16px;
+            font-weight: 700;
+            color: #4caf50;
+        }
+        .success-message {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .details-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .detail-item {
+            margin-bottom: 8px;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .next-steps {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✓ Payment Confirmed</h1>
+            <p>Your payment has been processed successfully</p>
+        </div>
+        
+        <div class="content">
+            <div class="success-message">
+                💚 Thank you for your payment. Your transaction is secure and confirmed.
+            </div>
+            
+            <div class="receipt">
+                <div class="receipt-header">
+                    <div class="receipt-title">Smart Pet Care</div>
+                    <div class="receipt-number">Receipt #{{transactionId}}</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="receipt-row">
+                    <span class="receipt-label">Payment ID:</span>
+                    <span class="receipt-value">{{paymentId}}</span>
+                </div>
+                
+                <div class="receipt-row">
+                    <span class="receipt-label">Date & Time:</span>
+                    <span class="receipt-value">{{paymentDate}}</span>
+                </div>
+                
+                <div class="receipt-row">
+                    <span class="receipt-label">Purpose:</span>
+                    <span class="receipt-value">{{paymentPurpose}}</span>
+                </div>
+                
+                {{#appointmentId}}
+                <div class="receipt-row">
+                    <span class="receipt-label">Appointment ID:</span>
+                    <span class="receipt-value">#{{appointmentId}}</span>
+                </div>
+                {{/appointmentId}}
+                
+                {{#orderId}}
+                <div class="receipt-row">
+                    <span class="receipt-label">Order ID:</span>
+                    <span class="receipt-value">#{{orderId}}</span>
+                </div>
+                {{/orderId}}
+                
+                <div class="divider"></div>
+                
+                <div class="receipt-row amount-total">
+                    <span>Amount Paid:</span>
+                    <span>₹{{amount}}</span>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="receipt-row">
+                    <span class="receipt-label">Payment Method:</span>
+                    <span class="receipt-value">{{paymentMethod}}</span>
+                </div>
+                
+                <div class="receipt-row">
+                    <span class="receipt-label">Status:</span>
+                    <span class="receipt-value" style="color: #4caf50; font-weight: 700;">Success</span>
+                </div>
+            </div>
+            
+            <div class="message">
+                {{#isAppointmentPayment}}
+                Your payment for the appointment booking has been confirmed. Dr. {{doctorName}} will review your request shortly.
+                {{/isAppointmentPayment}}
+                {{#isOrderPayment}}
+                Your order has been confirmed and is being prepared for shipment. You'll receive tracking information soon.
+                {{/isOrderPayment}}
+            </div>
+            
+            {{#isAppointmentPayment}}
+            <div class="details-section">
+                <div class="detail-item">
+                    <span class="detail-label">🏥 Appointment Details:</span>
+                </div>
+                <div class="detail-item">Date: {{appointmentDate}} at {{appointmentTime}}</div>
+                <div class="detail-item">Doctor: Dr. {{doctorName}}</div>
+                <div class="detail-item">Pet: {{petName}}</div>
+            </div>
+            {{/isAppointmentPayment}}
+            
+            {{#isOrderPayment}}
+            <div class="details-section">
+                <div class="detail-item">
+                    <span class="detail-label">📦 Order Details:</span>
+                </div>
+                <div class="detail-item">Order ID: #{{orderId}}</div>
+                <div class="detail-item">Total Items: {{itemCount}}</div>
+                <div class="detail-item">Shipping Address: {{shippingAddress}}</div>
+            </div>
+            {{/isOrderPayment}}
+            
+            <div class="next-steps">
+                <strong>📋 What's Next?</strong><br>
+                {{#isAppointmentPayment}}
+                • Your appointment confirmation will be sent shortly<br>
+                • Check your email for appointment details<br>
+                • Prepare your pet for the appointment
+                {{/isAppointmentPayment}}
+                {{#isOrderPayment}}
+                • Your order is being prepared for shipment<br>
+                • You'll receive tracking information via email<br>
+                • Estimated delivery: {{estimatedDelivery}}
+                {{/isOrderPayment}}
+            </div>
+            
+            <a href="{{dashboardUrl}}" class="cta-button">
+                {{#isAppointmentPayment}}View Appointment{{/isAppointmentPayment}}
+                {{#isOrderPayment}}Track Order{{/isOrderPayment}}
+            </a>
+            
+            <div class="message">
+                <strong>Need help?</strong> If you have questions about your payment or {{#isAppointmentPayment}}appointment{{/isAppointmentPayment}}{{#isOrderPayment}}order{{/isOrderPayment}}, please contact our support team.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>Your trusted partner in pet healthcare</p>
+            <p style="margin-top: 15px; font-size: 11px;">© 2026 Smart Pet Care. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

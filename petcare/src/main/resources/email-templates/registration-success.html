@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .role-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        .features {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .features h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #555;
+        }
+        .feature-item:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 25px;
+            transition: opacity 0.3s;
+        }
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+        .next-steps {
+            background: #e3f2fd;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #1565c0;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        .footer-links {
+            font-size: 12px;
+        }
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Welcome!</h1>
+            <p>Your Smart Pet Care Journey Begins</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Hello {{userName}},
+            </div>
+            
+            <div class="message">
+                Congratulations! Your account has been successfully created. We're thrilled to have you join the Smart Pet Care community.
+            </div>
+            
+            <div class="role-badge">
+                {{roleBadge}}
+            </div>
+            
+            <div class="features">
+                <h3>You now have access to:</h3>
+                <div class="feature-item">Complete pet health management at your fingertips</div>
+                <div class="feature-item">Book appointments with certified veterinarians</div>
+                <div class="feature-item">Access digital prescriptions and medical records</div>
+                <div class="feature-item">Real-time notifications for important updates</div>
+                {{#isDoctor}}<div class="feature-item">Manage appointments and patient profiles</div>{{/isDoctor}}
+                {{#isPetOwner}}<div class="feature-item">Shop premium pet care products and accessories</div>{{/isPetOwner}}
+            </div>
+            
+            <a href="{{loginUrl}}" class="cta-button">
+                Login to Your Dashboard
+            </a>
+            
+            <div class="next-steps">
+                <strong>📋 What's Next?</strong><br>
+                {{#isPetOwner}}
+                1. Complete your pet profile by adding photos<br>
+                2. Schedule your first appointment<br>
+                3. Browse and order from our marketplace
+                {{/isPetOwner}}
+                {{#isDoctor}}
+                1. Complete your profile verification<br>
+                2. Wait for admin approval (24-48 hours)<br>
+                3. Start accepting appointments
+                {{/isDoctor}}
+            </div>
+            
+            <div class="message">
+                If you have any questions or need assistance, our support team is here to help. Just reply to this email or visit our help center.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>Your trusted partner in pet healthcare</p>
+            <div class="footer-links">
+                <a href="{{helpUrl}}">Help</a>
+                <a href="{{privacyUrl}}">Privacy</a>
+                <a href="{{termsUrl}}">Terms</a>
+            </div>
+            <p style="margin-top: 15px; font-size: 11px;">© 2026 Smart Pet Care. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

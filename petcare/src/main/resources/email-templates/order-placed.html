@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .order-card {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .order-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            margin-bottom: 10px;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .summary-card {
+            background: #ffffff;
+            border: 1px solid #eef1f4;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        .summary-card h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .summary-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .support-card {
+            background: #f0f7ff;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #1e5aa7;
+        }
+        @media (min-width: 600px) {
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .order-id {
+            font-size: 24px;
+            font-weight: 700;
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+        .order-date {
+            font-size: 13px;
+            color: #e65100;
+            opacity: 0.8;
+        }
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 18px;
+        }
+        .step-circle.active {
+            background: #ff9800;
+        }
+        .step-circle.inactive {
+            background: #ddd;
+        }
+        .step-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+        .step-connector {
+            position: absolute;
+            top: 20px;
+            left: 60%;
+            right: -30%;
+            height: 3px;
+            background: #ddd;
+        }
+        .progress-step:first-child .step-connector {
+            display: none;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .items-section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-name {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        .item-qty {
+            font-size: 13px;
+            color: #999;
+            margin-right: 20px;
+        }
+        .item-price {
+            font-size: 14px;
+            color: #ff9800;
+            font-weight: 600;
+        }
+        .order-summary {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff9800;
+        }
+        .delivery-info {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .next-steps {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #856404;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Order Confirmed!</h1>
+            <p>Your order has been successfully placed</p>
+        </div>
+        
+        <div class="content">
+            <div class="order-card">
+                <div class="order-id">Order #{{orderId}}</div>
+                <div class="order-date">Ordered on {{orderDate}}</div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="order-badge">Payment Confirmed</div>
+                    <h4>Hi {{recipientName}},</h4>
+                    <p>Your order is secured and we’re preparing it for shipment.</p>
+                </div>
+                <div class="summary-card">
+                    <h4>🚚 Delivery Window</h4>
+                    <p>Estimated delivery: <strong>{{estimatedDelivery}}</strong></p>
+                </div>
+                <div class="summary-card">
+                    <h4>📍 Shipping Address</h4>
+                    <p>{{shippingAddress}}</p>
+                </div>
+                <div class="summary-card">
+                    <h4>🧾 Order Status</h4>
+                    <p>We’ll send tracking updates as soon as the package ships.</p>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-step">
+                    <div class="step-circle active">✓</div>
+                    <div class="step-label">Order Placed</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle inactive">2</div>
+                    <div class="step-label">Processing</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle inactive">3</div>
+                    <div class="step-label">Shipped</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle inactive">4</div>
+                    <div class="step-label">Delivered</div>
+                </div>
+            </div>
+            
+            <div class="message">
+                Thank you for shopping with Smart Pet Care! Your order is confirmed and will be processed shortly.
+            </div>
+            
+            <div class="items-section">
+                <div class="section-title">📦 Order Items</div>
+                {{#items}}
+                <div class="item">
+                    <div>
+                        <div class="item-name">{{productName}}</div>
+                        <div class="item-qty">Qty: {{quantity}}</div>
+                    </div>
+                    <div class="item-price">₹{{itemTotal}}</div>
+                </div>
+                {{/items}}
+                {{#hasMoreItems}}
+                <div class="item" style="justify-content: center; color: #999;">
+                    ... and {{moreItemsCount}} more items
+                </div>
+                {{/hasMoreItems}}
+            </div>
+            
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹{{subtotal}}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>₹{{shipping}}</span>
+                </div>
+                {{#tax}}
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span>₹{{tax}}</span>
+                </div>
+                {{/tax}}
+                <div class="summary-total">
+                    <span>Total Amount:</span>
+                    <span>₹{{totalAmount}}</span>
+                </div>
+            </div>
+            
+            <div class="delivery-info">
+                📦 <strong>Estimated Delivery:</strong> {{estimatedDelivery}}<br>
+                📍 Shipping to: {{shippingAddress}}
+            </div>
+            
+            <div class="next-steps">
+                <strong>✓ What's Next?</strong><br>
+                • We're preparing your order for shipment<br>
+                • You'll receive a tracking update shortly<br>
+                • Keep your order ID handy for reference
+            </div>
+
+            <div class="support-card">
+                Need help with this order? Reply to this email and our support team will assist you.
+            </div>
+            
+            <a href="{{trackingUrl}}" class="cta-button">
+                Track Your Order
+            </a>
+            
+            <div class="message">
+                <strong>Thank you for choosing Smart Pet Care!</strong> If you have any questions about your order, please don't hesitate to contact our customer support team.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>Everything your pet needs, delivered to your door</p>
+            <p style="margin-top: 15px; font-size: 11px;">© 2026 Smart Pet Care. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

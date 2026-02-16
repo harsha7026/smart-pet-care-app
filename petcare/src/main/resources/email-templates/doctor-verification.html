@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Verification Status - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header.approved {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        }
+        .header.rejected {
+            background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-box {
+            background: #f8f9fa;
+            border-left: 5px solid;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .status-box.approved {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+        }
+        .status-box.rejected {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .message.approved {
+            color: #2e7d32;
+        }
+        .message.rejected {
+            color: #c62828;
+        }
+        .details-section {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .detail-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #555;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .access-features {
+            margin-bottom: 20px;
+        }
+        .feature-list {
+            margin-left: 20px;
+        }
+        .feature-item {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .feature-item:before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .rejection-reason {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #c62828;
+        }
+        .next-steps {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .cta-button.approved {
+            background: #4caf50;
+            color: white;
+        }
+        .cta-button.rejected {
+            background: #667eea;
+            color: white;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header {{statusClass}}">
+            {{#isApproved}}
+            <h1>✅ Profile Verified!</h1>
+            <p>Welcome to Smart Pet Care</p>
+            {{/isApproved}}
+            {{#isRejected}}
+            <h1>⚠️ Verification Update</h1>
+            <p>Your profile verification status</p>
+            {{/isRejected}}
+        </div>
+        
+        <div class="content">
+            {{#isApproved}}
+            <div class="status-box approved">
+                <div class="message approved">
+                    <strong>🎉 Congratulations Dr. {{doctorName}}!</strong><br>
+                    Your profile has been verified by our administration team. You are now an approved healthcare provider on Smart Pet Care.
+                </div>
+            </div>
+            {{/isApproved}}
+            
+            {{#isRejected}}
+            <div class="status-box rejected">
+                <div class="message rejected">
+                    <strong>⚠️ Profile Verification Update</strong><br>
+                    Unfortunately, your profile verification could not be completed at this time. Please see the details below.
+                </div>
+            </div>
+            {{/isRejected}}
+            
+            <div class="details-section">
+                <div class="section-title">📋 Verification Details</div>
+                <div class="detail-item">
+                    <span class="detail-label">Name:</span> Dr. {{doctorName}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Specialization:</span> {{specialization}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Clinic:</span> {{clinicName}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Verification Date:</span> {{verificationDate}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Verification Status:</span> 
+                    <strong>{{#isApproved}}✅ Approved{{/isApproved}}{{#isRejected}}❌ Rejected{{/isRejected}}</strong>
+                </div>
+            </div>
+            
+            {{#isApproved}}
+            <div class="access-features">
+                <div class="section-title">🎯 You Now Have Access To:</div>
+                <div class="feature-list">
+                    <div class="feature-item">View and manage appointment requests from pet owners</div>
+                    <div class="feature-item">Approve or reject appointment bookings</div>
+                    <div class="feature-item">Add prescriptions and medical records</div>
+                    <div class="feature-item">Track appointment history and patient records</div>
+                    <div class="feature-item">Update your availability and schedule</div>
+                    <div class="feature-item">Receive real-time notifications for new bookings</div>
+                </div>
+            </div>
+            
+            <div class="next-steps">
+                <strong>✓ Getting Started:</strong><br>
+                1. Log in to your Smart Pet Care dashboard<br>
+                2. Complete your profile setup (availability, fees)<br>
+                3. Start accepting appointments from pet owners<br>
+                4. Build your professional reputation with positive reviews
+            </div>
+            {{/isApproved}}
+            
+            {{#isRejected}}
+            <div class="rejection-reason">
+                <strong>Reason for Rejection:</strong><br>
+                {{rejectionReason}}
+            </div>
+            
+            <div class="next-steps">
+                <strong>📋 What You Can Do:</strong><br>
+                1. Review the rejection reason carefully<br>
+                2. Gather the required documentation<br>
+                3. Update your profile with corrected information<br>
+                4. Resubmit for verification<br>
+                <br>
+                <strong>Need Help?</strong> Contact our verification team at verify@smartpetcare.com with any questions about the rejection.
+            </div>
+            {{/isRejected}}
+            
+            <a href="{{dashboardUrl}}" class="cta-button {{statusClass}}">
+                {{#isApproved}}Go to Dashboard{{/isApproved}}
+                {{#isRejected}}Update Profile & Resubmit{{/isRejected}}
+            </a>
+            
+            <div class="message">
+                {{#isApproved}}
+                Thank you for joining Smart Pet Care. We're excited to have you as part of our network of trusted veterinary professionals. If you have any questions about your account or services, feel free to contact our support team.
+                {{/isApproved}}
+                {{#isRejected}}
+                We appreciate your interest in Smart Pet Care. Please review the documents and information provided during registration. If you believe this decision was made in error, you can appeal by contacting our verification team.
+                {{/isRejected}}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>Connecting Pet Owners with Trusted Veterinarians</p>
+            <p style="margin-top: 15px; font-size: 11px;">© 2026 Smart Pet Care. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

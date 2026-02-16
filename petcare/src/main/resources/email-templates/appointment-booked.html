@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Confirmed - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .appointment-card {
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            border-left: 5px solid #00bcd4;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .appointment-detail {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .appointment-label {
+            color: #00796b;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        .appointment-value {
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .divider {
+            height: 1px;
+            background: #00bcd4;
+            margin: 15px 0;
+            opacity: 0.3;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #0097a7;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .reminder {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #c2185b;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Appointment Confirmed</h1>
+            <p>Your veterinary appointment is scheduled</p>
+        </div>
+        
+        <div class="content">
+            <div class="status-badge">Pending Approval</div>
+            
+            <div class="message">
+                {{#isPetOwner}}
+                Hi {{petOwnerName}}, your appointment request has been submitted successfully!
+                {{/isPetOwner}}
+                {{#isDoctor}}
+                Hi Dr. {{doctorName}}, you have a new appointment request!
+                {{/isDoctor}}
+            </div>
+            
+            <div class="appointment-card">
+                <div class="appointment-detail">
+                    <div class="appointment-label">Appointment ID</div>
+                    <div class="appointment-value">#{{appointmentId}}</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                {{#isPetOwner}}
+                <div class="appointment-detail">
+                    <div class="appointment-label">Veterinarian</div>
+                    <div class="appointment-value">Dr. {{doctorName}}</div>
+                </div>
+                {{/isPetOwner}}
+                
+                {{#isDoctor}}
+                <div class="appointment-detail">
+                    <div class="appointment-label">Pet Owner</div>
+                    <div class="appointment-value">{{petOwnerName}}</div>
+                </div>
+                {{/isDoctor}}
+                
+                <div class="appointment-detail">
+                    <div class="appointment-label">Pet Name</div>
+                    <div class="appointment-value">{{petName}}</div>
+                </div>
+                
+                <div class="appointment-detail">
+                    <div class="appointment-label">Date & Time</div>
+                    <div class="appointment-value">{{appointmentDate}} at {{appointmentTime}}</div>
+                </div>
+                
+                <div class="appointment-detail">
+                    <div class="appointment-label">Current Status</div>
+                    <div class="appointment-value">{{appointmentStatus}}</div>
+                </div>
+            </div>
+            
+            {{#isDoctor}}
+            <div class="reminder">
+                ⏰ <strong>Action Required:</strong> Please review this appointment and approve or reject within 24 hours.
+            </div>
+            {{/isDoctor}}
+            
+            {{#isPetOwner}}
+            <div class="info-box">
+                ℹ️ Your appointment is pending doctor approval. We'll notify you as soon as Dr. {{doctorName}} responds.
+            </div>
+            {{/isPetOwner}}
+            
+            <div class="message">
+                {{#isPetOwner}}
+                Please ensure you have all relevant medical records and documents ready for the appointment. If you need to reschedule, please cancel and book a new slot.
+                {{/isPetOwner}}
+                {{#isDoctor}}
+                Please review the appointment details above. You can approve or reject this appointment from your dashboard. Any remarks will be shared with the pet owner.
+                {{/isDoctor}}
+            </div>
+            
+            <a href="{{dashboardUrl}}" class="btn btn-primary">
+                {{#isPetOwner}}View Appointment{{/isPetOwner}}
+                {{#isDoctor}}Review & Respond{{/isDoctor}}
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>For questions, contact our support team</p>
+        </div>
+    </div>
+</body>
+</html>

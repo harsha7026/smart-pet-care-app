@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Reply to Your Support Ticket - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .message-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .admin-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2196f3;
+            margin-bottom: 8px;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .details-section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .detail-item {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #333;
+        }
+        .action-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #e65100;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💬 New Reply Received</h1>
+            <p>Your support ticket has a new message</p>
+        </div>
+        
+        <div class="content">
+            <div class="message">
+                Hi {{userName}},<br><br>
+                {{adminName}} from our support team has replied to your ticket. Please check the message below.
+            </div>
+            
+            <div class="message-box">
+                <div class="admin-name">📧 {{adminName}} (Support Team)</div>
+                <div class="message">
+                    We've received your support request and are here to help! Click the button below to view the full conversation and reply.
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <div class="section-title">📋 Ticket Information</div>
+                <div class="detail-item">
+                    <span class="detail-label">Ticket ID:</span> #{{ticketId}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Subject:</span> {{subject}}
+                </div>
+            </div>
+            
+            <div class="action-box">
+                <strong>⚡ Action Required:</strong><br>
+                Please reply to this message so we can continue assisting you. The sooner you respond, the faster we can resolve your issue!
+            </div>
+            
+            <a href="{{ticketUrl}}" class="cta-button">
+                View & Reply to Ticket
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care Support</strong></p>
+            <p>We're committed to resolving your issue quickly!</p>
+        </div>
+    </div>
+</body>
+</html>

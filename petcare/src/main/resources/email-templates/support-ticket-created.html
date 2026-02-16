@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Ticket Created - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .ticket-card {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .ticket-id {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        .ticket-date {
+            font-size: 13px;
+            color: #667eea;
+            opacity: 0.8;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .details-section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .detail-item {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #333;
+        }
+        .description-box {
+            background: #fafafa;
+            border-left: 3px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .next-steps {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎫 Support Ticket Created</h1>
+            <p>Your ticket has been successfully created</p>
+        </div>
+        
+        <div class="content">
+            <div class="message">
+                Hi {{userName}},<br><br>
+                Thank you for reaching out! Your support ticket has been created and our team will review it shortly.
+            </div>
+            
+            <div class="ticket-card">
+                <div class="ticket-id">Ticket #{{ticketId}}</div>
+                <div class="ticket-date">Created just now</div>
+            </div>
+            
+            <div class="details-section">
+                <div class="section-title">📋 Ticket Details</div>
+                <div class="detail-item">
+                    <span class="detail-label">Category:</span> {{category}}
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Subject:</span> {{subject}}
+                </div>
+            </div>
+            
+            <div class="description-box">
+                <strong>📝 Your Issue:</strong><br><br>
+                {{description}}
+            </div>
+            
+            <div class="next-steps">
+                <strong>✓ What Happens Next?</strong><br>
+                • Our support team will review your ticket<br>
+                • You'll receive updates via email<br>
+                • Average response time: 2-4 hours<br>
+                • Track your ticket status anytime
+            </div>
+            
+            <a href="{{ticketUrl}}" class="cta-button">
+                View Your Ticket
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care Support</strong></p>
+            <p>We're here to help! If you need immediate assistance, reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>

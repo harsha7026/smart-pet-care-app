@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Status Update - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header.approved {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        }
+        .header.rejected {
+            background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+        }
+        .header.completed {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-icon {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .status-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid;
+        }
+        .status-box.approved {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+        }
+        .status-box.rejected {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        .status-box.completed {
+            border-left-color: #2196f3;
+            background: #e3f2fd;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .details-section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .detail-item {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .detail-label {
+            font-weight: 500;
+            color: #333;
+        }
+        .remarks {
+            background: #fafafa;
+            border-left: 3px solid #2196f3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+            font-style: italic;
+        }
+        .prescription-link {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .prescription-link a {
+            color: #2196f3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .next-steps {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .highlight-strip {
+            background: #fff7e6;
+            border: 1px solid #ffe0b2;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin: 15px 0 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .appointment-chip {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            align-self: flex-start;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #eef1f4;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        .info-card h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .info-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+        @media (min-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .cta-button {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header {{statusClass}}">
+            <h1>{{statusEmoji}} {{statusTitle}}</h1>
+            <p>Your appointment status has been updated</p>
+        </div>
+        
+        <div class="content">
+            <div class="status-box {{statusClass}}">
+                <div class="message">
+                    {{#isApproved}}
+                    Great news! Your appointment has been <strong>approved</strong> by Dr. {{doctorName}}. Your appointment is now confirmed.
+                    {{/isApproved}}
+                    {{#isRejected}}
+                    Your appointment request has been <strong>declined</strong> by Dr. {{doctorName}}. Please check the remarks below or schedule with another veterinarian.
+                    {{/isRejected}}
+                    {{#isCompleted}}
+                    Your appointment with Dr. {{doctorName}} has been <strong>completed</strong>. Thank you for choosing Smart Pet Care!
+                    {{/isCompleted}}
+                </div>
+            </div>
+
+            {{#isApproved}}
+            <div class="highlight-strip">
+                <span class="appointment-chip">Appointment Approved</span>
+                <div class="message">
+                    You're all set for <strong>{{appointmentDate}}</strong> at <strong>{{appointmentTime}}</strong>.
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>📍 Clinic Visit Checklist</h4>
+                    <p>Carry prior medical records and arrive 5–10 minutes early.</p>
+                </div>
+                <div class="info-card">
+                    <h4>🧾 Payment Status</h4>
+                    <p>Your payment is confirmed. No further action needed.</p>
+                </div>
+                <div class="info-card">
+                    <h4>📞 Need to Reschedule?</h4>
+                    <p>Use your dashboard to request a change anytime.</p>
+                </div>
+                <div class="info-card">
+                    <h4>🐾 Pet Comfort Tips</h4>
+                    <p>Bring a favorite toy or treat to keep your pet calm.</p>
+                </div>
+            </div>
+            {{/isApproved}}
+            
+            <div class="details-section">
+                <div class="section-title">📋 Appointment Details</div>
+                <div class="detail-item">
+                    <div class="detail-label">Appointment ID:</div>
+                    <div>#{{appointmentId}}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Pet:</div>
+                    <div>{{petName}}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Doctor:</div>
+                    <div>Dr. {{doctorName}}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Date & Time:</div>
+                    <div>{{appointmentDate}} at {{appointmentTime}}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Status:</div>
+                    <div><strong>{{appointmentStatus}}</strong></div>
+                </div>
+            </div>
+            
+            {{#hasRemarks}}
+            <div class="remarks">
+                <strong>📝 Doctor's Remarks:</strong><br>
+                {{doctorRemarks}}
+            </div>
+            {{/hasRemarks}}
+            
+            {{#hasPresciption}}
+            <div class="prescription-link">
+                <strong>💊 Prescription Available:</strong><br>
+                Your prescription is ready. <a href="{{prescriptionUrl}}">Click here to view</a>
+            </div>
+            {{/hasPresciption}}
+            
+            {{#isApproved}}
+            <div class="next-steps">
+                <strong>✓ What's Next?</strong><br>
+                • Prepare your pet for the appointment<br>
+                • Have any medical records ready<br>
+                • Plan to arrive 5-10 minutes early<br>
+                • We'll send a reminder 24 hours before the appointment
+            </div>
+            {{/isApproved}}
+            
+            {{#isRejected}}
+            <div class="next-steps">
+                <strong>📅 Next Steps:</strong><br>
+                • Review the doctor's remarks above<br>
+                • Contact the doctor if you need clarification<br>
+                • Browse other available veterinarians<br>
+                • Book a new appointment at your convenience
+            </div>
+            {{/isRejected}}
+            
+            {{#isCompleted}}
+            <div class="next-steps">
+                <strong>✓ Appointment Complete</strong><br>
+                • Your prescription has been uploaded<br>
+                • Digital records are available in your dashboard<br>
+                • Follow doctor's recommendations for post-appointment care<br>
+                • Schedule next checkup if recommended
+            </div>
+            {{/isCompleted}}
+            
+            <a href="{{dashboardUrl}}" class="cta-button">
+                View Full Details
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong> - Your Pet's Health is Our Priority</p>
+            <p>Need help? Contact our support team</p>
+        </div>
+    </div>
+</body>
+</html>

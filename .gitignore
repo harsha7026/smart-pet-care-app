@@ -1,0 +1,36 @@
+# Backend
+petcare/target/
+petcare/.classpath
+petcare/.project
+petcare/.settings/
+petcare/*.log
+petcare/.vscode/
+petcare/.idea/
+
+# Frontend
+petcare-frontend/node_modules/
+petcare-frontend/build/
+petcare-frontend/.env.local
+petcare-frontend/.env.development.local
+petcare-frontend/.env.test.local
+petcare-frontend/.env.production.local
+petcare-frontend/npm-debug.log*
+petcare-frontend/yarn-debug.log*
+petcare-frontend/yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+petcare/uploads/
+
+# Database
+*.sql.bak

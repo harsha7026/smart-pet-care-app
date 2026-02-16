@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Update - Smart Pet Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #e0f7fa;
+            color: #00838f;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .message {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .status-meaning {
+            background: #e0f2f1;
+            border-left: 4px solid #1abc9c;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #00695c;
+        }
+        .timeline {
+            margin-bottom: 25px;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item:not(:last-child):before {
+            content: "";
+            position: absolute;
+            left: 19px;
+            top: 45px;
+            height: 20px;
+            width: 2px;
+            background: #ddd;
+        }
+        .timeline-item.completed:not(:last-child):before {
+            background: #1abc9c;
+        }
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #999;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+        .timeline-item.completed .timeline-dot {
+            background: #1abc9c;
+            color: white;
+        }
+        .timeline-item.current .timeline-dot {
+            background: #ff9800;
+            color: white;
+            box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.2);
+        }
+        .timeline-content {
+            padding-top: 5px;
+        }
+        .timeline-status {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .timeline-date {
+            font-size: 12px;
+            color: #999;
+        }
+        .order-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+        .info-value {
+            color: #333;
+            font-weight: 600;
+        }
+        .next-step {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+        .delivery-message {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #1abc9c;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 {{statusEmoji}} {{statusTitle}}</h1>
+            <p>Your order is on the move</p>
+        </div>
+        
+        <div class="content">
+            <div class="status-badge">{{orderStatus}}</div>
+            
+            <div class="message">
+                Good news! Your order #{{orderId}} status has been updated.
+            </div>
+            
+            <div class="status-meaning">
+                <strong>{{statusEmoji}} What does this mean?</strong><br>
+                {{#isProcessing}}
+                Your order is being carefully prepared and packaged in our warehouse. We're picking and packing your items with care.
+                {{/isProcessing}}
+                {{#isShipped}}
+                Your order has been handed over to the shipping carrier. A tracking number has been assigned and is available below.
+                {{/isShipped}}
+                {{#isOutForDelivery}}
+                Your order is out for delivery today! Our delivery partner is on the way to your address. Please be available to receive it.
+                {{/isOutForDelivery}}
+                {{#isDelivered}}
+                Your order has been successfully delivered! Thank you for shopping with us. Please verify the contents and rate your experience.
+                {{/isDelivered}}
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item completed">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-status">Order Placed</div>
+                        <div class="timeline-date">{{placedDate}}</div>
+                    </div>
+                </div>
+                
+                {{#statusAfterPlaced}}
+                <div class="timeline-item completed">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-status">Processing</div>
+                        <div class="timeline-date">{{processingDate}}</div>
+                    </div>
+                </div>
+                {{/statusAfterPlaced}}
+                
+                {{#statusAfterShipped}}
+                <div class="timeline-item {{#isShipped}}current{{/isShipped}}{{#statusAfterShipped}}completed{{/statusAfterShipped}}">
+                    <div class="timeline-dot">{{#isShipped}}📦{{/isShipped}}{{#statusAfterShipped}}✓{{/statusAfterShipped}}</div>
+                    <div class="timeline-content">
+                        <div class="timeline-status">Shipped</div>
+                        <div class="timeline-date">{{shippedDate}}</div>
+                    </div>
+                </div>
+                {{/statusAfterShipped}}
+                
+                {{#statusAfterOutForDelivery}}
+                <div class="timeline-item {{#isOutForDelivery}}current{{/isOutForDelivery}}{{#statusAfterOutForDelivery}}completed{{/statusAfterOutForDelivery}}">
+                    <div class="timeline-dot">{{#isOutForDelivery}}🚚{{/isOutForDelivery}}{{#statusAfterOutForDelivery}}✓{{/statusAfterOutForDelivery}}</div>
+                    <div class="timeline-content">
+                        <div class="timeline-status">Out for Delivery</div>
+                        <div class="timeline-date">{{outForDeliveryDate}}</div>
+                    </div>
+                </div>
+                {{/statusAfterOutForDelivery}}
+                
+                {{#statusAfterDelivered}}
+                <div class="timeline-item completed">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-status">Delivered</div>
+                        <div class="timeline-date">{{deliveredDate}}</div>
+                    </div>
+                </div>
+                {{/statusAfterDelivered}}
+            </div>
+            
+            <div class="order-info">
+                <div class="info-row">
+                    <span class="info-label">Order ID:</span>
+                    <span class="info-value">#{{orderId}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Current Status:</span>
+                    <span class="info-value">{{orderStatus}}</span>
+                </div>
+                {{#trackingNumber}}
+                <div class="info-row">
+                    <span class="info-label">Tracking Number:</span>
+                    <span class="info-value">{{trackingNumber}}</span>
+                </div>
+                {{/trackingNumber}}
+                {{#estimatedDelivery}}
+                <div class="info-row">
+                    <span class="info-label">Est. Delivery:</span>
+                    <span class="info-value">{{estimatedDelivery}}</span>
+                </div>
+                {{/estimatedDelivery}}
+            </div>
+            
+            {{#isDelivered}}
+            <div class="delivery-message">
+                ✅ <strong>Delivery Confirmed!</strong><br>
+                Your order has been delivered successfully. Please check the contents and contact us if there are any issues.
+            </div>
+            {{/isDelivered}}
+            
+            {{#isOutForDelivery}}
+            <div class="next-step">
+                <strong>📍 Important:</strong> Your delivery is scheduled for today. Please ensure someone is available to receive the package.
+            </div>
+            {{/isOutForDelivery}}
+            
+            <a href="{{trackingUrl}}" class="cta-button">
+                View Full Tracking Details
+            </a>
+            
+            <div class="message">
+                For detailed tracking information and delivery updates, visit your Smart Pet Care dashboard.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Smart Pet Care</strong></p>
+            <p>Thank you for your order!</p>
+            <p style="margin-top: 15px; font-size: 11px;">© 2026 Smart Pet Care. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
