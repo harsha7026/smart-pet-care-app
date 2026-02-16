@@ -144,7 +144,3 @@ new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("y
 - Integration tests, contract tests, and API documentation (OpenAPI/Swagger)
 - Dockerization and CI/CD pipeline
 - Caching, rate limiting, metrics, and distributed tracing
-
----
-
-If you want, I can add a Maven Wrapper and a Docker Compose file to run MySQL + backend locally with one command.
